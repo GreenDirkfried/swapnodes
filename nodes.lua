@@ -19,13 +19,14 @@ function swapnodes.register_falling_node(material, material_sound)
 	--swap node
 	register_node("swapnodes:" .. material, {
 		description = S("swap" .. material),
-		tiles = {"default_" .. material .. ".png"},
+		tiles = {"default_" .. material .. ".png^fachwerk_cross.png"},
 		sounds = material_sound,
 	  on_punch = function(pos)
-					--if puncher:get_wielded_item():get_name() == "default:torch" then
-						minetest.swap_node(pos,{name="swapnodes:" .. material .. "_falling"})
-	          minetest.registered_nodes["swapnodes:" .. material .. "_falling"].on_construct(pos)
-					--end
+			--if puncher:get_wielded_item():get_name() == "default:torch" then
+			minetest.sound_play({name = "default_wood_footstep", gain = 0.2}, { pos = pos }, true)
+			minetest.swap_node(pos,{name="swapnodes:" .. material .. "_falling"})
+			minetest.registered_nodes["swapnodes:" .. material .. "_falling"].on_construct(pos)
+			--end
 		end,
 	})
 	if minetest.get_modpath("mesecons_mvps") then
